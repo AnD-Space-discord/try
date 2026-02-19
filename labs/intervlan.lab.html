@@ -13,7 +13,7 @@
 </head>
 
 <body>
-                              <nav>
+  <nav>
     <a href="../index.html">Home</a>
     <div class="nav-item">
       <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
@@ -38,7 +38,7 @@
     <a href="../contact.html">Contact</a>
   </nav>
 
-                      <header class="lab-header">
+  <header class="lab-header">
     <h1>Inter-VLAN Routing Lab</h1>
     <p>Configuring Router-on-a-Stick (ROAS)</p>
   </header>
@@ -46,14 +46,14 @@
   <main class="lab-main">
 
     <h2>Objective</h2>
-    [cite_start]<p>Configure a Router and Switch to allow communication between VLAN 10 and VLAN 20 using
-      sub-interfaces. [cite: 4, 5]</p>
+    <p>Configure a Router and Switch to allow communication between VLAN 10 and VLAN 20 using
+      sub-interfaces. </p>
 
     <h2>Lab Topology</h2>
     <div
       style="text-align: center; margin: 30px 0; padding: 20px; background: #f9f9f9; border: 2px dashed #ccc; border-radius: 8px;">
-      [cite_start]<p><strong>R1 (Gi0/0)</strong> connected to <strong>SW1 (Gi0/1)</strong> [cite: 4, 5]</p>
-      <p><strong>VLAN 10:</strong> 192.168.10.0/24 | [cite_start]<strong>VLAN 20:</strong> 192.168.20.0/24 [cite: 4, 5]
+      <p><strong>R1 (Gi0/0)</strong> connected to <strong>SW1 (Gi0/1)</strong> </p>
+      <p><strong>VLAN 10:</strong> 192.168.10.0/24 | <strong>VLAN 20:</strong> 192.168.20.0/24
       </p>
     </div>
 
@@ -63,11 +63,11 @@
           class="dot green"></span></div>
       <pre>
 <span class="prompt">SW1(config)#</span> <span class="command">hostname SW1</span>
-[cite_start]<span class="prompt">SW1(config)#</span> <span class="command">vlan 10</span> [cite: 5]
-[cite_start]<span class="prompt">SW1(config)#</span> <span class="command">vlan 20</span> [cite: 5]
-[cite_start]<span class="prompt">SW1(config)#</span> <span class="command">interface gigabitEthernet 0/1</span> [cite: 5]
-[cite_start]<span class="prompt">SW1(config-if)#</span> <span class="command">switchport mode trunk</span> [cite: 5]
-[cite_start]<span class="prompt">SW1(config-if)#</span> <span class="command">no shutdown</span> [cite: 5]
+<span class="prompt">SW1(config)#</span> <span class="command">vlan 10</span> 
+<span class="prompt">SW1(config)#</span> <span class="command">vlan 20</span> 
+<span class="prompt">SW1(config)#</span> <span class="command">interface gigabitEthernet 0/1</span> 
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport mode trunk</span> 
+<span class="prompt">SW1(config-if)#</span> <span class="command">no shutdown</span> 
 </pre>
     </div>
 
@@ -77,17 +77,17 @@
           class="dot green"></span></div>
       <pre>
 <span class="prompt">R1(config)#</span> <span class="command">hostname R1</span>
-[cite_start]<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0</span> [cite: 4]
-[cite_start]<span class="prompt">R1(config-if)#</span> <span class="command">no shutdown</span> [cite: 4]
+<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0</span> 
+<span class="prompt">R1(config-if)#</span> <span class="command">no shutdown</span> 
 <span class="prompt">R1(config-if)#</span> <span class="command">exit</span>
 
-[cite_start]<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0.10</span> [cite: 4]
-[cite_start]<span class="prompt">R1(config-subif)#</span> <span class="command">encapsulation dot1q 10</span> [cite: 4]
-[cite_start]<span class="prompt">R1(config-subif)#</span> <span class="command">ip address 192.168.10.1 255.255.255.0</span> [cite: 4]
+<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0.10</span> 
+<span class="prompt">R1(config-subif)#</span> <span class="command">encapsulation dot1q 10</span> 
+<span class="prompt">R1(config-subif)#</span> <span class="command">ip address 192.168.10.1 255.255.255.0</span> 
 
-[cite_start]<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0.20</span> [cite: 4]
-[cite_start]<span class="prompt">R1(config-subif)#</span> <span class="command">encapsulation dot1q 20</span> [cite: 4]
-[cite_start]<span class="prompt">R1(config-subif)#</span> <span class="command">ip address 192.168.20.1 255.255.255.0</span> [cite: 4]
+<span class="prompt">R1(config)#</span> <span class="command">interface gigabitEthernet 0/0.20</span> 
+<span class="prompt">R1(config-subif)#</span> <span class="command">encapsulation dot1q 20</span> 
+<span class="prompt">R1(config-subif)#</span> <span class="command">ip address 192.168.20.1 255.255.255.0</span> 
 </pre>
     </div>
 
@@ -106,37 +106,37 @@ C    192.168.20.0/24 is directly connected, GigabitEthernet0/0.20
     </div>
 
 
-    
 
-  
-        <!-- Dynamic Script Downloads Section -->
-        <div id="script-downloads-container"></div>
-        <script src="../js/script-loader.js"></script>
 
-        <div class="d-flex justify-content-end mt-4 mb-3">
-            <a href="dhcp.lab.html" class="btn btn-primary btn-lg">
-                Next Lab: DHCP Configuration Lab <i class="fas fa-chevron-right ms-2"></i>
-            </a>
-        </div>
-    </main>
+
+    <!-- Dynamic Script Downloads Section -->
+    <div id="script-downloads-container"></div>
+    <script src="../js/script-loader.js"></script>
+
+    <div class="d-flex justify-content-end mt-4 mb-3">
+      <a href="dhcp.lab.html" class="btn btn-primary btn-lg">
+        Next Lab: DHCP Configuration Lab <i class="fas fa-chevron-right ms-2"></i>
+      </a>
+    </div>
+  </main>
 
   <div id="script-downloads-container"></div>
   <script src="../js/script-loader.js"></script>
 
-                          <footer>
+  <footer>
     <p>© 2026 Architecture & Developer Space</p>
   </footer>
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/download-broker.js"></script>
-<script src="../js/theme-manager.js"></script>
+  <script src="../js/theme-manager.js"></script>
 </body>
 
 </html>
