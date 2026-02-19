@@ -5,7 +5,6 @@
 
 const labScriptsData = {
     'acl.lab.html': { folder: 'ACL', files: ['R1.txt', 'SW1.txt'], pkt: 'acl.pkt' },
-    'acl-lab.html': { folder: 'ACL', files: ['R1.txt', 'SW1.txt'], pkt: 'acl.pkt' },
     'dhcp.lab.html': { folder: 'DHCP', files: ['R1.txt'], pkt: 'dhcp.pkt' },
     'eigrp.lab.html': { folder: 'EIGRP', files: ['R1.txt', 'R2.txt', 'R3.txt'], pkt: 'eigrp.pkt' },
     'intervlan.lab.html': { folder: 'InterVLAN', files: ['R1.txt', 'SW1.txt'], pkt: 'intervlan.pkt' },

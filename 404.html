@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting... | Architecture & Developer Space</title>
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .loader {
+            border: 3px solid rgba(59, 130, 246, 0.1);
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        /**
+         * GLOBAL REDIRECT ENGINE (301-Style)
+         * Handles legacy links, renamed labs, and shortcut URLs on GitHub Pages.
+         */
+        const path = window.location.pathname;
+        const normalizedPath = path.toLowerCase().replace(/\/$/, "");
+
+        // 1. Explicit Redirect Map
+        const redirects = {
+            // Legacy Renames
+            '/labs/example%20acl.lab.html': '/labs/acl.lab.html',
+            '/labs/example-acl.lab.html': '/labs/acl.lab.html',
+            '/labs/lab01.html': '/labs/LAB01.lab.html',
+
+            // Topic Shortcuts
+            '/switching': '/labs/switching.html',
+            '/routing': '/labs/routing.html',
+            '/security': '/labs/security.html',
+            '/ip-services': '/labs/ip-services.html',
+            '/labs': '/labs.html',
+            '/blog': '/blog.html'
+        };
+
+        // 2. Global Pattern Matching (Regex)
+        const patterns = [
+            // Pattern: /labs/name.lab.html -> /labs/name.lab.html
+            {
+                regex: /^\/labs\/([a-z0-9-]+)-lab\.html$/i,
+                replacement: (match) => `/labs/${match[1].toLowerCase()}.lab.html`
+            },
+            // Pattern: /labs/name (no extension) -> /labs/name.lab.html or /labs/name.html
+            {
+                regex: /^\/labs\/([a-z0-9-]+)$/i,
+                replacement: (match) => `/labs/${match[1].toLowerCase()}.lab.html` // Try .lab.html first
+            }
+        ];
+
+        let target = null;
+
+        // Check explicit map first
+        for (const key in redirects) {
+            if (key.toLowerCase() === normalizedPath || key.toLowerCase() === path.toLowerCase()) {
+                target = redirects[key];
+                break;
+            }
+        }
+
+        // Check patterns if no explicit target found
+        if (!target) {
+            for (const p of patterns) {
+                const match = path.match(p.regex);
+                if (match) {
+                    target = p.replacement(match);
+                    break;
+                }
+            }
+        }
+
+        // Apply Redirect
+        if (target) {
+            console.log(`Redirecting to: ${target}`);
+            window.location.replace(target);
+        } else {
+            // Show 404 UI after a brief delay to ensure no slow script issues
+            setTimeout(() => {
+                const statusText = document.getElementById('status-text');
+                const subText = document.getElementById('sub-text');
+                const loader = document.getElementById('loader');
+
+                if (statusText) statusText.innerText = "Page Not Found (404)";
+                if (subText) subText.innerHTML = 'The requested resource could not be found.<br>Taking you <a href="/">Back Home</a>...';
+                if (loader) loader.style.display = 'none';
+
+                setTimeout(() => {
+                    if (!target && window.location.pathname !== '/') window.location.href = "/";
+                }, 3000);
+            }, 1000);
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <div class="loader" id="loader"></div>
+        <h1 id="status-text">Redirecting...</h1>
+        <p id="sub-text">Please Wait.</p>
+    </div>
+</body>
+
+</html>
