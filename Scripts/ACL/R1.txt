@@ -1,0 +1,62 @@
+!
+! --- HOSTNAME AND BASIC SECURITY ---
+!
+hostname R1
+!
+no ip domain-lookup
+! Disables DNS lookups to prevent the CLI from hanging on typos
+service password-encryption
+! Encrypts all clear-text passwords in the configuration file
+!
+enable secret Cisco123
+! Sets the encrypted password for privileged EXEC mode
+!
+username admin privilege 15 secret AdminPass123
+! Creates a local admin user with full access rights
+!
+! --- INTERFACE CONFIGURATION ---
+!
+interface GigabitEthernet0/0
+ description LAN_Internal_Source
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Finance_VLAN_Network
+ ip address 192.168.2.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Guest_VLAN_Network
+ ip address 192.168.3.1 255.255.255.0
+ no shutdown
+!
+! --- TASK 1: STANDARD ACL (BLOCK HOST A) ---
+!
+access-list 10 deny host 192.168.1.10
+! Denies specific traffic from Host A (Standard ACLs only check source IP)
+access-list 10 permit any
+! Permits all other traffic (Required because of the implicit deny at the end)
+!
+interface GigabitEthernet0/1
+ ip access-group 10 out
+! Applies the ACL to traffic leaving the router toward the Finance VLAN
+!
+! --- TASK 2: EXTENDED ACL (PERMIT WEB ONLY) ---
+!
+access-list 100 permit tcp 192.168.3.0 0.0.0.255 any eq 80
+! Permits HTTP (Port 80) traffic from Guest subnet to any destination
+access-list 100 permit tcp 192.168.3.0 0.0.0.255 any eq 443
+! Permits HTTPS (Port 443) traffic from Guest subnet to any destination
+access-list 100 deny ip any any
+! Explicitly blocks all other IP traffic from the Guest network
+!
+interface GigabitEthernet0/2
+ ip access-group 100 in
+! Applies the ACL to traffic entering the router from the Guest VLAN
+!
+! --- LINE AND MANAGEMENT SETUP ---
+!
+line con 0
+ logging synchronous
+ ! Prevents system messages from interrupting

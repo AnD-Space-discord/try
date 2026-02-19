@@ -1,0 +1,26 @@
+! RSA & SSH Configuration Script
+! Device: R1
+
+enable
+configure terminal
+
+! Step 1: Identity & Domain
+no ip domain-name
+
+! Step 2: Generate the Keys
+crypto key generate rsa
+! Note: Choose 2048 bits for modern security
+
+! Step 3: Harden SSH Settings
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+! Step 4: Lock Down VTY Lines
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+end
+write memory

@@ -1,0 +1,28 @@
+! Basic CLI Navigation & Security Configuration
+! Device: R1
+
+enable
+configure terminal
+
+! Task 1: Set Hostname
+hostname R1
+
+! Task 2: Secure the Console Line
+line console 0
+ password cisco123
+ login
+ logging synchronous
+ exit
+
+! Task 3: Secure Privileged Mode
+enable secret class123
+
+! Task 4: Configure Local Usernames
+username admin privilege 15 secret admin123
+username guest secret guestpass
+
+! Task 5: Encrypt Plain-Text Passwords
+service password-encryption
+
+end
+write memory

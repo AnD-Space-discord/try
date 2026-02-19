@@ -1,0 +1,21 @@
+enable
+configure terminal
+hostname R2
+!
+interface loopback 1
+ ip address 10.10.40.1 255.255.255.0
+exit
+!
+interface loopback 2
+ ip address 10.10.50.1 255.255.255.0
+exit
+!
+router eigrp 1
+ network 172.16.10.4
+ network 10.10.40.0
+ network 10.10.50.0
+ no auto-summary
+exit
+!
+end
+show ip route

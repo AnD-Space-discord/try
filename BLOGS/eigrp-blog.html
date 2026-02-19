@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+    crossorigin="anonymous"></script>
+  <title>EIGRP Basics | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                          <header class="hero">
+    <h1>EIGRP Basics</h1>
+    <p>Understanding Enhanced Interior Gateway Routing Protocol</p>
+  </header>
+
+  <main>
+
+    <p>
+      <strong>EIGRP (Enhanced Interior Gateway Routing Protocol)</strong> is an advanced distance-vector routing
+      protocol (often called "hybrid") that was originally Cisco-proprietary but is now an open standard. It is designed
+      for rapid convergence, scalability, and efficient bandwidth usage. EIGRP uses the <strong>DUAL (Diffusing Update
+        Algorithm)</strong> to calculate the shortest path and ensure a loop-free topology.
+    </p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Fast Convergence:</strong> EIGRP pre-calculates backup routes (Feasible Successors) and switches
+        immediately if the primary route fails.</li>
+      <li><strong>Protocol Dependent Modules (PDM):</strong> Supports multiple network layer protocols like IPv4 and
+        IPv6.</li>
+      <li><strong>Partial & Bounded Updates:</strong> Sends updates only when there is a change, and only to routers
+        that need the information, saving bandwidth.</li>
+      <li><strong>Equal & Unequal Cost Load Balancing:</strong> The only protocol that supports load balancing across
+        links with different metrics (using the <code>variance</code> command).</li>
+    </ul>
+
+    <h2>EIGRP Terminology</h2>
+    <div class="features"
+      style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px;">
+      <div class="card" style="padding: 15px;">
+        <h4 style="color:var(--accent-color);">Successor</h4>
+        <p style="font-size:0.9rem;">The best path to a destination network, stored in the routing table.</p>
+      </div>
+      <div class="card" style="padding: 15px;">
+        <h4 style="color:var(--accent-color);">Feasible Successor</h4>
+        <p style="font-size:0.9rem;">A loop-free backup path stored in the topology table. It is used immediately if the
+          Successor fails.</p>
+      </div>
+      <div class="card" style="padding: 15px;">
+        <h4 style="color:var(--accent-color);">Feasible Distance (FD)</h4>
+        <p style="font-size:0.9rem;">The total metric to reach the destination via the Successor.</p>
+      </div>
+    </div>
+
+    <h2>EIGRP Tables</h2>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Table Name</th>
+          <th>Description</th>
+          <th>Command</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Neighbor Table</strong></td>
+          <td>Lists directly connected EIGRP neighbors.</td>
+          <td><code>show ip eigrp neighbors</code></td>
+        </tr>
+        <tr>
+          <td><strong>Topology Table</strong></td>
+          <td>Contains all learned routes (Successors & Feasible Successors).</td>
+          <td><code>show ip eigrp topology</code></td>
+        </tr>
+        <tr>
+          <td><strong>Routing Table</strong></td>
+          <td>Contains the best routes used to forward traffic.</td>
+          <td><code>show ip route eigrp</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>EIGRP Packet Types</h2>
+    <ul>
+      <li><strong>Hello:</strong> Used to discover and maintain neighbors. Sent periodically.</li>
+      <li><strong>Update:</strong> Contains routing information. Sent only when necessary.</li>
+      <li><strong>Query:</strong> Sent when a route fails and no Feasible Successor is available.</li>
+      <li><strong>Reply:</strong> Response to a Query packet.</li>
+      <li><strong>ACK:</strong> Acknowledges receipt of Update, Query, or Reply packets.</li>
+    </ul>
+
+    <h2>Metric Calculation (K-Values)</h2>
+    <p>EIGRP uses a composite metric based on Bandwidth and Delay by default.</p>
+    <p><em>Formula:</em> <code>Metric = 256 * ((10^7 / Min Bandwidth) + (Total Delay / 10))</code></p>
+
+    <h2>Basic Configuration</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">Router(config)#</span> <span class="command">router eigrp 100</span> <span style="color:#777;">! 100 is the Autonomous System (AS) number</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">network 192.168.1.0</span> <span style="color:#777;">! Classful network</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">network 10.0.0.0 0.255.255.255</span> <span style="color:#777;">! With Wildcard Mask</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">no auto-summary</span> <span style="color:#777;">! Disable automatic summarization</span>
+</pre>
+    </div>
+
+    
+
+  </main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/eigrp.lab.html" class="btn">Go to EIGRP Configuration Lab →</a>
+</div>
+
+
+                          <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+  </script>
+<script src="../js/theme-manager.js"></script>
+</body>
+
+</html>

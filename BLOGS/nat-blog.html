@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>NAT Basics | CCNA Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Network Address Translation (NAT)</h1>
+  <p>Connecting Private Networks to the Public Internet</p>
+  </header>
+
+<main>
+
+<p><strong>NAT (Network Address Translation)</strong> is a method of remapping one IP address space into another. It is primarily used to allow devices on a private network (using RFC 1918 addresses) to communicate with the public Internet using a single or few public IP addresses.</p>
+
+<h2>Types of NAT</h2>
+<ul>
+  <li><strong>Static NAT:</strong> One-to-One mapping. Used for servers that need to be accessible from the outside.</li>
+  <li><strong>Dynamic NAT:</strong> Many-to-Many mapping. Maps a private IP to a public IP from a pool of available addresses.</li>
+  <li><strong>PAT (Port Address Translation) / NAT Overload:</strong> Many-to-One mapping. Maps multiple private IPs to a single public IP using different port numbers. This is the most common type used in homes and offices.</li>
+</ul>
+
+<h2>NAT Terminology</h2>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Inside Local</td><td>The private IP address of the device on the internal network.</td></tr>
+    <tr><td>Inside Global</td><td>The public IP address the internal device uses to communicate with the outside world.</td></tr>
+    <tr><td>Outside Global</td><td>The IP address of the destination device on the internet.</td></tr>
+  </tbody>
+</table>
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/nat.lab.html" class="btn">Go to NAT Configuration Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

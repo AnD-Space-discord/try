@@ -1,0 +1,32 @@
+! --- Basic Configuration ---
+hostname SW1
+enable secret cisco
+
+! --- VLAN Creation ---
+vlan 10
+ name Sales
+vlan 20
+ name Marketing
+exit
+
+! --- Trunk Port to Router ---
+interface GigabitEthernet0/1
+ description Trunk to R1
+ switchport trunk encapsulation dot1q  ! (If supported)
+ switchport mode trunk
+ no shutdown
+exit
+
+! --- Access Ports (Example) ---
+interface range FastEthernet0/1 - 10
+ switchport mode access
+ switchport access vlan 10
+!
+interface range FastEthernet0/11 - 20
+ switchport mode access
+ switchport access vlan 20
+exit
+
+! --- Verification ---
+show vlan brief
+show interfaces trunk

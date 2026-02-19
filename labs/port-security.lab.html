@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Port Security Lab</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                              <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                    <header class="lab-header">
+    <h1>Port Security Lab</h1>
+  <p>Securing Switch Access Ports</p>
+  </header>
+
+<main class="lab-main">
+
+<h2>Objective</h2>
+<p>Configure Port Security to restrict input to an interface by limiting and identifying MAC addresses of the stations allowed to access the port.</p>
+
+<h2>Task 1 – Enable Port Security</h2>
+<p>Configure Fa0/1 to allow only 1 device and learn the MAC address dynamically (sticky).</p>
+<div class="terminal">
+<div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+<pre>
+<span class="prompt">SW1(config)#</span> <span class="command">interface fastEthernet 0/1</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport mode access</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport port-security</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport port-security maximum 1</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport port-security mac-address sticky</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport port-security violation restrict</span>
+</pre>
+</div>
+
+<h2>Task 2 – Verification</h2>
+<p>Check the port security status.</p>
+<div class="terminal">
+<div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+<pre>
+<span class="prompt">SW1#</span> <span class="command">show port-security interface fa0/1</span>
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Restrict
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 1
+</pre>
+</div>
+
+
+                
+    
+    
+        <!-- Dynamic Script Downloads Section -->
+        <div id="script-downloads-container"></div>
+        <script src="../js/script-loader.js"></script>
+
+        <div class="d-flex justify-content-end mt-4 mb-3">
+            <a href="basic.cli.lab.html" class="btn btn-primary btn-lg">
+                Next Lab: Basic CLI Navigation & Security <i class="fas fa-chevron-right ms-2"></i>
+            </a>
+        </div>
+    </main>
+
+
+  
+
+
+    
+    
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/download-broker.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+    crossorigin="anonymous"></script>
+  <title>OSPF Multi-Area Lab</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+                              <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                      <header class="lab-header">
+    <h1>OSPF Multi-Area Lab</h1>
+    <p>Configuring OSPF Areas 1, 0, and 2</p>
+  </header>
+
+  <main class="lab-main">
+
+    <h2>Objective</h2>
+    <p>Configure Multi-Area OSPF. R1 in Area 1, R2 and R3 in Area 0 (Backbone), and R4 in Area 2.</p>
+
+    <h2>Lab Topology</h2>
+
+    <div
+      style="text-align: center; margin: 30px 0; padding: 20px; background: #f9f9f9; border: 2px dashed #ccc; border-radius: 8px;">
+      <p><strong>R1 (Area 1)</strong> <---> <strong>R2 (ABR)</strong> <---> <strong>R3 (ABR)</strong> <---> <strong>R4
+                (Area 2)</strong></p>
+      <p>R1-R2 Link: Area 1 | R2-R3 Link: Area 0 | R3-R4 Link: Area 2</p>
+    </div>
+
+    <h2>Task 1 – Configure R1 (Internal Area 1)</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">R1(config)#</span> <span class="command">hostname R1</span>
+<span class="prompt">R1(config)#</span> <span class="command">interface GigabitEthernet0/0</span>
+<span class="prompt">R1(config-if)#</span> <span class="command">ip address 10.1.2.1 255.255.255.0</span>
+<span class="prompt">R1(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R1(config)#</span> <span class="command">router ospf 1</span>
+<span class="prompt">R1(config-router)#</span> <span class="command">router-id 1.1.1.1</span>
+<span class="prompt">R1(config-router)#</span> <span class="command">network 10.1.1.0 0.0.0.255 area 1</span>
+<span class="prompt">R1(config-router)#</span> <span class="command">network 10.1.2.0 0.0.0.255 area 1</span>
+</pre>
+    </div>
+
+    <h2>Task 2 – Configure R2 (ABR: Area 1 & 0)</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">R2(config)#</span> <span class="command">hostname R2</span>
+<span class="prompt">R2(config)#</span> <span class="command">interface Gi0/0</span> <span style="color:#777;">! To R1</span>
+<span class="prompt">R2(config-if)#</span> <span class="command">ip address 10.1.2.2 255.255.255.0</span>
+<span class="prompt">R2(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R2(config)#</span> <span class="command">interface Gi0/1</span> <span style="color:#777;">! To R3</span>
+<span class="prompt">R2(config-if)#</span> <span class="command">ip address 10.2.3.2 255.255.255.0</span>
+<span class="prompt">R2(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R2(config)#</span> <span class="command">router ospf 1</span>
+<span class="prompt">R2(config-router)#</span> <span class="command">router-id 2.2.2.2</span>
+<span class="prompt">R2(config-router)#</span> <span class="command">network 10.1.2.0 0.0.0.255 area 1</span>
+<span class="prompt">R2(config-router)#</span> <span class="command">network 10.2.3.0 0.0.0.255 area 0</span>
+</pre>
+    </div>
+
+    <h2>Task 3 – Configure R3 (ABR: Area 0 & 2)</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">R3(config)#</span> <span class="command">hostname R3</span>
+<span class="prompt">R3(config)#</span> <span class="command">interface Gi0/0</span> <span style="color:#777;">! To R2</span>
+<span class="prompt">R3(config-if)#</span> <span class="command">ip address 10.2.3.3 255.255.255.0</span>
+<span class="prompt">R3(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R3(config)#</span> <span class="command">interface Gi0/1</span> <span style="color:#777;">! To R4</span>
+<span class="prompt">R3(config-if)#</span> <span class="command">ip address 10.3.4.3 255.255.255.0</span>
+<span class="prompt">R3(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R3(config)#</span> <span class="command">router ospf 1</span>
+<span class="prompt">R3(config-router)#</span> <span class="command">router-id 3.3.3.3</span>
+<span class="prompt">R3(config-router)#</span> <span class="command">network 10.2.3.0 0.0.0.255 area 0</span>
+<span class="prompt">R3(config-router)#</span> <span class="command">network 10.3.4.0 0.0.0.255 area 2</span>
+</pre>
+    </div>
+
+    <h2>Task 4 – Configure R4 (Internal Area 2)</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">R4(config)#</span> <span class="command">hostname R4</span>
+<span class="prompt">R4(config)#</span> <span class="command">interface Gi0/0</span>
+<span class="prompt">R4(config-if)#</span> <span class="command">ip address 10.3.4.4 255.255.255.0</span>
+<span class="prompt">R4(config-if)#</span> <span class="command">no shutdown</span>
+<span class="prompt">R4(config)#</span> <span class="command">router ospf 1</span>
+<span class="prompt">R4(config-router)#</span> <span class="command">router-id 4.4.4.4</span>
+<span class="prompt">R4(config-router)#</span> <span class="command">network 10.3.4.0 0.0.0.255 area 2</span>
+</pre>
+    </div>
+
+    <h2>Task 5 – Verification</h2>
+    <p>Ensure adjacencies are formed and inter-area routes are present in the routing table.</p>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span
+          class="dot green"></span></div>
+      <pre>
+<span class="prompt">R1#</span> <span class="command">show ip ospf neighbor</span>
+<span class="prompt">R1#</span> <span class="command">show ip route ospf</span>
+O IA    10.2.3.0 [110/2] via 10.1.2.2, GigabitEthernet0/0
+O IA    10.3.4.0 [110/3] via 10.1.2.2, GigabitEthernet0/0
+<span class="prompt">R1#</span> <span class="command">show ip ospf interface brief</span>
+</pre>
+    </div>
+
+  
+                
+    
+    
+        <!-- Dynamic Script Downloads Section -->
+        <div id="script-downloads-container"></div>
+        <script src="../js/script-loader.js"></script>
+
+        <div class="d-flex justify-content-end mt-4 mb-3">
+            <a href="acl.lab.html" class="btn btn-primary btn-lg">
+                Next Lab: ACL Configuration Lab <i class="fas fa-chevron-right ms-2"></i>
+            </a>
+        </div>
+    </main>
+
+  <div id="script-downloads-container"></div>
+  <script src="../js/script-loader.js"></script>
+
+                          <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/download-broker.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+
+</html>

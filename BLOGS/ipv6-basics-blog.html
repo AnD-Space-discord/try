@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>IPv6 Basics | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>IPv6 Basics</h1>
+  <p>Introduction to the Next Generation Internet Protocol</p>
+  </header>
+
+<main>
+
+<p>
+<strong>IPv6 (Internet Protocol version 6)</strong> is the successor to IPv4. While IPv4 uses 32-bit addresses (allowing for ~4.3 billion addresses), IPv6 uses <strong>128-bit addresses</strong>, providing a virtually infinite number of addresses to accommodate the growing number of devices on the internet.
+</p>
+
+<h2>IPv4 vs. IPv6 Format</h2>
+<ul>
+  <li><strong>IPv4:</strong> 192.168.1.1 (Decimal)</li>
+  <li><strong>IPv6:</strong> 2001:0db8:85a3:0000:0000:8a2e:0370:7334 (Hexadecimal)</li>
+</ul>
+
+<h2>Address Representation & Shortening</h2>
+<p>IPv6 addresses are written in 8 groups of 4 hexadecimal digits, separated by colons. To make them easier to read, we can use two rules:</p>
+
+<h3>1. Omit Leading Zeros</h3>
+<p>You can remove zeros at the beginning of any block.</p>
+<div class="highlight">
+<code>2001:0db8:0001:0000...</code> becomes <code>2001:db8:1:0...</code>
+</div>
+
+<h3>2. Double Colon (::)</h3>
+<p>You can replace one contiguous string of all-zero blocks with a double colon (::). This can only be done <strong>once</strong> in an address.</p>
+<div class="highlight">
+Full: <code>2001:0db8:0000:0000:0000:0000:1428:57ab</code><br>
+Shortened: <code>2001:db8::1428:57ab</code>
+</div>
+
+<h2>IPv6 Communication Types</h2>
+<p>IPv6 handles data transmission differently than IPv4. The concept of "Broadcast" (sending to everyone) is removed to reduce network noise. Instead, it uses:</p>
+
+<div class="features" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px;">
+  <div class="card" style="padding: 15px;">
+    <h4 style="color:var(--accent-color);">Unicast</h4>
+    <p><strong>One-to-One</strong></p>
+    <p style="font-size:0.9rem;">Packets are sent from one source to a single specific destination.</p>
+  </div>
+  <div class="card" style="padding: 15px;">
+    <h4 style="color:var(--accent-color);">Multicast</h4>
+    <p><strong>One-to-Many</strong></p>
+    <p style="font-size:0.9rem;">Packets are sent to a specific group of devices. Only devices listening to that group process the packet.</p>
+  </div>
+  <div class="card" style="padding: 15px;">
+    <h4 style="color:var(--accent-color);">Anycast</h4>
+    <p><strong>One-to-Nearest</strong></p>
+    <p style="font-size:0.9rem;">The same address is assigned to multiple servers. The network routes the packet to the closest one.</p>
+  </div>
+</div>
+
+<h2>Deep Dive: Unicast Address Types</h2>
+<p>Since Unicast is the most common communication, it has specific address types for different scopes:</p>
+
+<h3>1. Link-Local Address (FE80::/10)</h3>
+<p>
+  This is the most unique feature of IPv6. Every IPv6-enabled interface <strong>automatically</strong> generates a Link-Local address.
+</p>
+<ul>
+  <li><strong>Range:</strong> Starts with <code>fe80</code>.</li>
+  <li><strong>Purpose:</strong> Communication <em>only</em> within the local network segment (link).</li>
+  <li><strong>Routing:</strong> Routers <strong>do not</strong> forward these packets.</li>
+  <li><strong>Use Case:</strong> Neighbor Discovery Protocol (NDP), Routing Protocol Hello packets (OSPFv3, EIGRP).</li>
+</ul>
+
+<h3>2. Global Unicast Address (GUA)</h3>
+<ul>
+  <li><strong>Range:</strong> Starts with <code>2000::/3</code> (2xxx or 3xxx).</li>
+  <li><strong>Purpose:</strong> Public internet communication.</li>
+  <li><strong>Routing:</strong> Routable globally on the internet (like IPv4 Public IPs).</li>
+</ul>
+
+<h3>3. Unique Local Address (ULA)</h3>
+<ul>
+  <li><strong>Range:</strong> Starts with <code>fc00::/7</code> (Usually <code>fdxx</code>).</li>
+  <li><strong>Purpose:</strong> Private internal communication.</li>
+  <li><strong>Routing:</strong> Routable within an organization but <strong>not</strong> on the public internet (like IPv4 192.168.x.x).</li>
+</ul>
+
+<h2>Summary Table</h2>
+<table class="table table-dark table-striped" style="margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Prefix</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Global Unicast</td>
+      <td>2000::/3</td>
+      <td>Public Internet Address</td>
+    </tr>
+    <tr>
+      <td>Link-Local</td>
+      <td>fe80::/10</td>
+      <td>Local segment only (Non-routable)</td>
+    </tr>
+    <tr>
+      <td>Unique Local</td>
+      <td>fc00::/7</td>
+      <td>Private Network (VPN/LAN)</td>
+    </tr>
+    <tr>
+      <td>Multicast</td>
+      <td>ff00::/8</td>
+      <td>One-to-Many groups</td>
+    </tr>
+    <tr>
+      <td>Loopback</td>
+      <td>::1</td>
+      <td>Localhost (Self-test)</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/ipv6.lab.html" class="btn">Go to IPv6 Configuration Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

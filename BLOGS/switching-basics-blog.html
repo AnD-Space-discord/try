@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Switching Basics | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Switching Basics</h1>
+  <p>How Layer 2 Switches Work: MAC Tables and Forwarding</p>
+  </header>
+
+<main>
+
+<p>
+A <strong>Network Switch</strong> is a Layer 2 device that connects devices within a Local Area Network (LAN) and uses MAC addresses to forward data to the correct destination. Unlike a hub, which broadcasts data to everyone, a switch intelligently directs traffic.
+</p>
+
+<h2>The MAC Address Table (CAM Table)</h2>
+<p>
+The core of switching logic is the <strong>MAC Address Table</strong> (Content Addressable Memory). This table maps MAC addresses to specific switch ports and VLANs.
+</p>
+
+<h3>How a Switch Learns (The Process)</h3>
+<ol>
+  <li><strong>Learning (Source MAC):</strong> When a frame enters a port, the switch reads the <em>Source MAC address</em>. If it's not in the table, the switch adds it, associating it with that port and VLAN.</li>
+  <li><strong>Forwarding (Destination MAC):</strong> The switch then looks at the <em>Destination MAC address</em>.
+    <ul>
+      <li><strong>Known Unicast:</strong> If the destination MAC is in the table, the switch forwards the frame <em>only</em> to that specific port.</li>
+      <li><strong>Unknown Unicast / Broadcast:</strong> If the destination MAC is not in the table (or is FFFF.FFFF.FFFF), the switch <strong>floods</strong> the frame out all ports (except the incoming one).</li>
+    </ul>
+  </li>
+</ol>
+
+<h2>Aging Timer</h2>
+<p>
+MAC address entries do not stay in the table forever. To keep the table current and save memory, switches use an <strong>Aging Timer</strong>.
+</p>
+<ul>
+  <li><strong>Default Time:</strong> 300 seconds (5 minutes).</li>
+  <li><strong>Function:</strong> If no traffic is received from a specific Source MAC for 300 seconds, the entry is removed from the table.</li>
+</ul>
+
+<h2>Frame Switching Methods</h2>
+<p>Switches use different methods to process and forward frames:</p>
+<h3>1. Store-and-Forward</h3>
+<p>The switch receives the <strong>entire frame</strong> and checks it for errors (CRC check) before forwarding. It is the most reliable but has higher latency.</p>
+<h3>2. Cut-Through</h3>
+<p>The switch starts forwarding the frame as soon as the <strong>Destination MAC</strong> is read. It is faster (lower latency) but may forward corrupted frames.</p>
+<ul>
+  <li><strong>Fast-Forward:</strong> Forwards immediately after reading destination address.</li>
+  <li><strong>Fragment-Free:</strong> Reads the first 64 bytes (collision window) to check for fragments before forwarding.</li>
+</ul>
+
+<h2>VLAN Tables</h2>
+<p>
+Switches also maintain VLAN information. The MAC table includes the VLAN ID for each entry. Traffic from one VLAN is never forwarded to a port in a different VLAN (unless routed by a Layer 3 device).
+</p>
+
+<div class="terminal">
+<div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+<pre>
+<span class="prompt">Switch#</span> <span class="command">show mac address-table</span>
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0001.42a1.3e01    DYNAMIC     Fa0/1
+  10    0002.1b2c.4d02    DYNAMIC     Fa0/2
+  20    0003.5c3d.5e03    DYNAMIC     Fa0/3
+</pre>
+</div>
+
+<div class="highlight">
+<strong>Key Takeaway:</strong> Switches learn from the Source MAC and forward based on the Destination MAC.
+</div>
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/LAB01.lab.html" class="btn">Go to VLAN Configuration Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

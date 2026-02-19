@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Trunk Ports & 802.1Q — CCNA Lab Hub</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Trunk Ports & 802.1Q</h1>
+  <p>How trunk ports carry multiple VLANs across a single link</p>
+  </header>
+
+<main>
+
+<p>
+A <strong>trunk port</strong> is a switch port configured to carry traffic for multiple VLANs across a single physical link between network devices. Trunks use tagging (most commonly 802.1Q) so the receiving device can identify which VLAN each frame belongs to.
+</p>
+
+<h2>Why Use Trunk Ports?</h2>
+<ul>
+  <li><strong>VLAN Communication:</strong> Trunk ports enable devices (switches, routers, firewalls) to carry traffic for all VLANs without needing separate physical links for each VLAN.</li>
+  <li><strong>Efficient Bandwidth Use:</strong> Consolidate traffic from multiple VLANs over one link, reducing cabling and port usage.</li>
+</ul>
+
+<h2>Trunk Port Configuration</h2>
+<h3>Access Mode vs. Trunk Mode</h3>
+<ul>
+  <li>By default, switch ports are in <em>access</em> mode and belong to a single VLAN.</li>
+  <li>To enable trunking, change the port mode to <em>trunk</em> so it can carry multiple VLANs.</li>
+</ul>
+
+<h3>802.1Q Encapsulation</h3>
+<h3>Trunking Protocols: ISL vs. 802.1Q</h3>
+<p>When a frame traverses a trunk link, it must be "tagged" so the receiving switch knows which VLAN it belongs to. There are two main protocols for this:</p>
+
+<h4>1. ISL (Inter-Switch Link)</h4>
+<ul>
+  <li><strong>Type:</strong> Cisco Proprietary (Legacy).</li>
+  <li><strong>Method:</strong> Encapsulates the entire original Ethernet frame with a new header (26 bytes) and trailer (4 bytes).</li>
+  <li><strong>Overhead:</strong> High (30 bytes total).</li>
+  <li><strong>Native VLAN:</strong> Does <strong>not</strong> support Native VLANs; all frames are tagged.</li>
+  <li><strong>Status:</strong> Deprecated and not supported on most modern Cisco hardware.</li>
+</ul>
+
+<h4>2. IEEE 802.1Q (Dot1q)</h4>
+<ul>
+  <li><strong>Type:</strong> Industry Standard (IEEE).</li>
+  <li><strong>Method:</strong> Inserts a 4-byte tag <em>inside</em> the original Ethernet header.</li>
+  <li><strong>Overhead:</strong> Low (4 bytes).</li>
+  <li><strong>Native VLAN:</strong> Supports Native VLANs. Frames belonging to the Native VLAN are <strong>untagged</strong>.</li>
+  <li><strong>Status:</strong> The standard protocol used in modern networks.</li>
+</ul>
+
+<div class="highlight">
+<strong>Note:</strong> On modern Cisco switches, 802.1Q is often the only supported encapsulation method. On older Layer 3 switches, you might need to manually specify it using <code>switchport trunk encapsulation dot1q</code>.
+</div>
+
+<h3>Deep Dive: Native VLAN</h3>
+<p>The <strong>Native VLAN</strong> is a unique concept in 802.1Q trunking. While all other VLANs are tagged to identify them, traffic for the Native VLAN is sent across the trunk <strong>untagged</strong>.</p>
+
+<h4>Key Characteristics:</h4>
+<ul>
+  <li><strong>Untagged Traffic:</strong> Any frame arriving at a trunk port without a tag is assumed to belong to the Native VLAN.</li>
+  <li><strong>Default Setting:</strong> On Cisco switches, the default Native VLAN is <strong>VLAN 1</strong>.</li>
+  <li><strong>Compatibility:</strong> It allows switches to communicate with devices that don't understand VLAN tags (like old hubs or unmanaged switches).</li>
+</ul>
+
+<h4>Security & Best Practices</h4>
+<div class="highlight">
+  <strong>Critical Rule:</strong> The Native VLAN must match on both ends of the trunk link!
+</div>
+<p>If Switch A uses VLAN 1 as native and Switch B uses VLAN 99, you will receive <em>"Native VLAN mismatch"</em> errors on the console, and traffic might be misdirected (VLAN leaking).</p>
+
+<p><strong>Security Tip:</strong> It is a security best practice to change the Native VLAN from the default (VLAN 1) to an unused VLAN ID (e.g., VLAN 999) to prevent specific types of attacks known as <em>VLAN Hopping</em>.</p>
+
+<h2>Troubleshooting Trunk Ports</h2>
+<ul>
+  <li>Use show commands like <code>show interfaces trunk</code> and <code>show vlan brief</code> to inspect trunk status and VLAN membership.</li>
+  <li>Verify both ends of the trunk agree on encapsulation (802.1Q) and native VLAN settings.</li>
+  <li>Check for mismatched VLAN lists or allowed VLAN ranges that could block traffic.</li>
+</ul>
+
+<div class="note">
+<strong>Quick CLI example:</strong>
+<pre style="background:#0d1117;color:#e6edf3;padding:12px;margin-top:10px;">
+<span class="prompt">Switch(config)#</span> <span class="command">interface gigabitEthernet0/1</span>
+<span class="prompt">Switch(config-if)#</span> <span class="command">switchport mode trunk</span>
+<span class="prompt">Switch(config-if)#</span> <span class="command">switchport trunk encapsulation dot1q</span>
+<span class="prompt">Switch(config-if)#</span> <span class="command">switchport trunk encapsulation dot1q</span> <span style="color:#777;">! Required on some L3 switches</span>
+<span class="prompt">Switch(config-if)#</span> <span class="command">switchport trunk native vlan 99</span>
+<span class="prompt">Switch(config-if)#</span> <span class="command">switchport trunk allowed vlan 10,20,30</span>
+</pre>
+</div>
+
+<p>Trunks are fundamental when designing multi-VLAN networks and are commonly used between switches, and between switches and routers or virtualization hosts.</p>
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/trunk.lab.html" class="btn">Go to Trunking Lab →</a>
+</div>
+
+
+
+
+<footer>
+  <p>© 2026 Architecture & Developer Space | Reach out on Discord or Telegram</p>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

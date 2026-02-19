@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 0.1: Basic CLI & Security | EMC Global</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+                                <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="lab-header">
+    <p style="color: var(--accent-color); font-weight: 600; margin-bottom: 5px;">Level 0: The Absolute Fundamentals
+        </p>
+        <h1>Basic CLI Navigation & Security</h1>
+        <p>Secure the device management plane before configuring interfaces.</p>
+  </header>
+
+    <main class="lab-main">
+        <h2><i class="fas fa-bullseye"></i> Lab Objective</h2>
+        <p>In this lab, you will perform the initial configuration of a Cisco Router. Before a router can pass traffic,
+            it must be identifiable and secure. You will learn how to:</p>
+        <ul>
+            <li>Change the device <strong>Hostname</strong>.</li>
+            <li>Secure the <strong>Console Port</strong> (physical access).</li>
+            <li>Secure the <strong>Privileged Exec Mode</strong> (remote/admin access).</li>
+            <li>Create <strong>Local Users</strong> for SSH/Telnet access.</li>
+            <li>Encrypt all plain-text passwords.</li>
+        </ul>
+
+        <h2><i class="fas fa-network-wired"></i> Topology & Requirements</h2>
+        <p>Connect a PC to the Router using a Console Cable (Rollover Cable).</p>
+        <div class="card mb-4">
+            <h3 style="font-size: 1.2rem; color: #fff;">Device Details</h3>
+            <ul>
+                <li><strong>Device:</strong> Router R1 (Generic Cisco Router)</li>
+                <li><strong>Connection:</strong> Console Cable (RS-232 to USB)</li>
+            </ul>
+        </div>
+
+        <h2>Task 1: Enter Global Configuration & Set Hostname</h2>
+        <p>By default, all Cisco routers are named "Router". We must change this to identify the device.</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span style="margin-left: 10px; font-size: 0.8rem; color: #9ca3af;">Console - R1</span>
+            </div>
+            <pre>
+Router><span class="command">enable</span>
+Router#<span class="command">configure terminal</span>
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#<span class="command">hostname R1</span>
+<span class="prompt">R1(config)#</span><span class="cursor"></span>
+      </pre>
+        </div>
+
+        <h2>Task 2: Secure the Console Line</h2>
+        <p>This password is required when someone physically plugs into the router.</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <pre>
+<span class="prompt">R1(config)#</span><span class="command">line console 0</span>
+<span class="prompt">R1(config-line)#</span><span class="command">password cisco123</span>
+<span class="prompt">R1(config-line)#</span><span class="command">login</span>
+<span class="prompt">R1(config-line)#</span><span class="command">logging synchronous</span>
+<span class="prompt">R1(config-line)#</span><span class="command">exit</span>
+      </pre>
+        </div>
+        <p><em>Note: `logging synchronous` prevents system messages from interrupting your typing.</em></p>
+
+        <h2>Task 3: Secure Privileged Mode (Enable Secret)</h2>
+        <p>This password protects the "enable" command (admin rights).</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <pre>
+<span class="prompt">R1(config)#</span><span class="command">enable secret class123</span>
+      </pre>
+        </div>
+
+        <h2>Task 4: Configure Local Usernames</h2>
+        <p>To allow remote logins (SSH/Telnet), the router needs a local database of users. We will create an admin user
+            with full privileges.</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <pre>
+<span class="prompt">R1(config)#</span><span class="command">username admin privilege 15 secret admin123</span>
+<span class="prompt">R1(config)#</span><span class="command">username guest secret guestpass</span>
+      </pre>
+        </div>
+
+        <div class="alert mt-3"
+            style="background: rgba(37, 99, 235, 0.1); border-left: 4px solid var(--accent-color); color: var(--text-main);">
+            <strong><i class="fas fa-info-circle"></i> Important: "Password" vs "Secret"</strong><br>
+            <ul style="margin-bottom: 0;">
+                <li><code>username admin <b>password</b> cisco</code>: Stores the password as <strong>Type 7</strong>
+                    (Easily crackable) or Plain Text.</li>
+                <li><code>username admin <b>secret</b> cisco</code>: Stores the password as <strong>Type 5</strong> (MD5
+                    Hash) or Type 9 (Scrypt). <strong>Always use Secret!</strong></li>
+            </ul>
+        </div>
+
+        <h2>Task 5: Encrypt Plain-Text Passwords</h2>
+        <p>Any password configured with the `password` keyword (like the Console password in Task 2) is visible in plain
+            text. Use this command to encrypt them.</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <pre>
+<span class="prompt">R1(config)#</span><span class="command">service password-encryption</span>
+<span class="prompt">R1(config)#</span><span class="command">end</span>
+<span class="prompt">R1#</span><span class="command">write memory</span>
+      </pre>
+        </div>
+
+        <div id="script-downloads-container"></div>
+        <script src="../js/script-loader.js"></script>
+
+        <div class="d-flex justify-content-end mt-4 mb-3">
+            <a href="rsa.ssh.lab.html" class="btn btn-primary btn-lg">
+                Next Lab: RSA & SSH Configuration <i class="fas fa-chevron-right ms-2"></i>
+            </a>
+        </div>
+    </main>
+
+                            <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/download-broker.js"></script>
+
+<script src="../js/theme-manager.js"></script>
+</body>
+
+</html>

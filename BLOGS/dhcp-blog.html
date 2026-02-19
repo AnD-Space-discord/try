@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Understanding DHCP | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Dynamic Host Configuration Protocol (DHCP)</h1>
+  <p>How devices automatically receive IP addresses in modern networks</p>
+  </header>
+
+<main>
+
+<p>
+<strong>DHCP (Dynamic Host Configuration Protocol)</strong> is one of the most essential services in any TCP/IP network. Instead of manually assigning IP addresses to every device, DHCP automatically provides network configuration such as IP address, subnet mask, default gateway, and DNS server information.
+</p>
+
+<div class="highlight">
+DHCP reduces human error, simplifies network administration, and allows devices to connect and work instantly when they join a network.
+</div>
+
+<img src="../Images/DHCP/dhcp.png" alt="DHCP Process Diagram" style="max-width:100%; height:auto; margin:20px auto; display:block; border-radius:8px;">
+
+<h2>Why DHCP is Important</h2>
+<ul>
+  <li><strong>Centralized Management:</strong> IP settings are controlled by IT staff instead of individual users.</li>
+  <li><strong>Fewer Configuration Errors:</strong> Automatic configuration avoids wrong IP or gateway entries.</li>
+  <li><strong>Efficient Address Usage:</strong> IP addresses are leased and reused when devices leave the network.</li>
+  <li><strong>Mobility Support:</strong> Laptops and mobile devices can move between networks and still connect easily.</li>
+</ul>
+
+<h2>DHCP Client Concept</h2>
+<p>
+A device that needs network access acts as a <strong>DHCP client</strong>. Initially, it has no IP address but understands the DHCP protocol and can request configuration from a DHCP server.
+</p>
+
+<h2>The DORA Process</h2>
+<p>DHCP communication follows four steps known as <strong>DORA</strong>:</p>
+
+<div class="step">
+Discover → Offer → Request → Acknowledgment
+</div>
+
+<ul>
+  <li><strong>Discover:</strong> Client searches for a DHCP server.</li>
+  <li><strong>Offer:</strong> Server offers an available IP address.</li>
+  <li><strong>Request:</strong> Client requests server to reserve the offered IP and not to assign it anyone else.</li>
+  <li><strong>Acknowledgment:</strong> Server confirms and reserves the IP Address.</li>
+  <h5 class="Extra">Extra:</h5>
+  <li><strong>How it Binds the IP address to the device:</strong> The Server binds the IP address to devices network interface MAC Address.</li>
+</ul>
+
+<h2>Special IP Addresses Used</h2>
+<ul>
+  <li><strong>0.0.0.0</strong> — Used as a source address when the client does not yet have an IP.</li>
+  <li><strong>255.255.255.255</strong> — Broadcast address used to reach all devices on the local network.</li>
+</ul>
+
+<h2>How DHCP Works in a Network</h2>
+<p>
+When a device connects to a LAN, it broadcasts a Discover message because it doesn't know the server's IP. The DHCP server replies with an Offer. After the Request and Acknowledgment, the device can communicate normally using the assigned IP.
+</p>
+
+<h2>Benefits in Real Networks</h2>
+<ul>
+  <li>Quick deployment of new devices</li>
+  <li>Scalable for large organizations</li>
+  <li>Automatic IP renewal</li>
+  <li>Supports enterprise and home networks</li>
+</ul>
+
+<div class="highlight">
+<strong>In Summary:</strong> DHCP is a foundational networking service that automates IP configuration, improves efficiency, and supports mobility in modern networks — making it a key topic for CCNA learners.
+</div>
+
+
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/dhcp.lab.html" class="btn">Go to DHCP Configuration Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+! --- Basic Configuration ---
+hostname R3
+enable secret cisco
+line vty 0 4
+ password cisco
+ login
+exit
+
+! --- Interface Configuration ---
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.2.3.3 255.255.255.0  ! Link to R2
+ no shutdown
+!
+interface GigabitEthernet0/1
+ ip address 10.3.4.3 255.255.255.0  ! Link to R4
+ no shutdown
+exit
+
+! --- OSPF Configuration ---
+router ospf 1
+ router-id 3.3.3.3
+ network 10.2.3.0 0.0.0.255 area 0  ! Area 0 Interface
+ network 10.3.4.0 0.0.0.255 area 2  ! Area 2 Interface
+ network 3.3.3.3 0.0.0.0 area 0
+exit
+
+! --- Verification ---
+show ip ospf interface brief
+show ip route ospf

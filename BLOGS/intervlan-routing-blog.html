@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Inter-VLAN Routing | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Inter-VLAN Routing</h1>
+  <p>Connecting Isolated VLANs using Routers and Layer 3 Switches</p>
+  </header>
+
+<main>
+
+<p>
+By default, devices in different VLANs cannot communicate with each other because they are in separate broadcast domains. To enable communication, we need a Layer 3 device to route traffic between them. This is called <strong>Inter-VLAN Routing</strong>.
+</p>
+
+<h2>Method 1: Router-on-a-Stick (ROAS)</h2>
+<p>
+This is the most common method for small to medium networks using a router and a Layer 2 switch.
+</p>
+<ul>
+  <li><strong>Physical Connection:</strong> A single physical cable connects the router to the switch.</li>
+  <li><strong>Switch Config:</strong> The switch port is configured as a <strong>Trunk</strong> to carry multiple VLANs.</li>
+  <li><strong>Router Config:</strong> The router interface is divided into logical <strong>Sub-interfaces</strong> (e.g., <code>Gi0/0.10</code>). Each sub-interface is assigned an IP address and a VLAN tag (802.1Q).</li>
+</ul>
+
+<h2>Method 2: Layer 3 Switch (SVI)</h2>
+<p>
+Enterprise networks often use Layer 3 switches (Multilayer Switches) for faster performance.
+</p>
+<ul>
+  <li><strong>SVI (Switch Virtual Interface):</strong> You create a virtual interface for each VLAN (e.g., <code>interface vlan 10</code>) and assign it an IP address.</li>
+  <li><strong>Routing:</strong> You must enable IP routing globally on the switch using the command <code>ip routing</code>.</li>
+</ul>
+
+<h2>Comparison</h2>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Router-on-a-Stick</th>
+      <th>Layer 3 Switch (SVI)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Device</td><td>Router + L2 Switch</td><td>Multilayer Switch</td></tr>
+    <tr><td>Speed</td><td>Limited by link speed</td><td>Hardware switching (Fast)</td></tr>
+    <tr><td>Cost</td><td>Lower</td><td>Higher</td></tr>
+    <tr><td>Complexity</td><td>Sub-interfaces</td><td>Virtual Interfaces</td></tr>
+  </tbody>
+</table>
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/intervlan.lab.html" class="btn">Go to Inter-VLAN Routing Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

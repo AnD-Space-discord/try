@@ -1,0 +1,28 @@
+! --- Basic Configuration ---
+enable
+configure terminal
+hostname R1
+
+! --- Physical Interface ---
+interface GigabitEthernet0/0
+ description Link to SW1 Trunk
+ no ip address
+ no shutdown
+exit
+
+! --- Sub-interface VLAN 10 ---
+interface GigabitEthernet0/0.10
+ description Gateway for VLAN 10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+!
+! --- Sub-interface VLAN 20 ---
+interface GigabitEthernet0/0.20
+ description Gateway for VLAN 20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+exit
+
+! --- Verification ---
+show ip interface brief
+show ip route connected

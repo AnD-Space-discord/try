@@ -1,0 +1,27 @@
+! --- Basic Configuration ---
+hostname R4
+enable secret cisco
+line vty 0 4
+ password cisco
+ login
+exit
+
+! --- Interface Configuration ---
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.3.4.4 255.255.255.0
+ no shutdown
+exit
+
+! --- OSPF Configuration ---
+router ospf 1
+ router-id 4.4.4.4
+ network 10.3.4.0 0.0.0.255 area 2
+ network 4.4.4.4 0.0.0.0 area 2
+exit
+
+! --- Verification ---
+show ip route
+ping 1.1.1.1 source loopback 0

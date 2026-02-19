@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>IP Addressing & Subnetting Basics | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>IP Addressing & Subnetting Basics</h1>
+  <p>Understanding IPv4, Classes, and the role of Subnet Masks</p>
+  </header>
+
+<main>
+
+<p>
+An <strong>IP Address (Internet Protocol Address)</strong> is a unique numerical label assigned to each device connected to a computer network that uses the Internet Protocol for communication. It serves two main functions: host or network interface identification and location addressing.
+</p>
+
+<h2>Types of IP Addresses</h2>
+<ul>
+  <li><strong>IPv4 (Internet Protocol version 4):</strong> The most widely used version. It is a 32-bit address written in dot-decimal notation (e.g., <code>192.168.1.1</code>).</li>
+  <li><strong>IPv6 (Internet Protocol version 6):</strong> The newer standard designed to replace IPv4 due to address exhaustion. It is a 128-bit address written in hexadecimal (e.g., <code>2001:0db8:85a3::8a2e:0370:7334</code>).</li>
+</ul>
+
+<h3>Public vs. Private IP Addresses</h3>
+<p>
+<strong>Public IPs</strong> are unique across the entire internet and are assigned by ISPs. <strong>Private IPs</strong> are used within local networks (LANs) and are not routable on the public internet.
+</p>
+
+<h4>Private IP Ranges (RFC 1918)</h4>
+<p>To preserve public IPv4 addresses, specific ranges were reserved for private use within LANs. These addresses cannot be routed over the internet.</p>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Range</th>
+      <th>CIDR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Class A</td>
+      <td>10.0.0.0 – 10.255.255.255</td>
+      <td>10.0.0.0/8</td>
+    </tr>
+    <tr>
+      <td>Class B</td>
+      <td>172.16.0.0 – 172.31.255.255</td>
+      <td>172.16.0.0/12</td>
+    </tr>
+    <tr>
+      <td>Class C</td>
+      <td>192.168.0.0 – 192.168.255.255</td>
+      <td>192.168.0.0/16</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Network Part vs. Host Part</h2>
+<p>
+Every IP address is divided into two parts:
+</p>
+<ul>
+  <li><strong>Network Part:</strong> Identifies the specific network or subnet the device belongs to. (Like a street name).</li>
+  <li><strong>Host Part:</strong> Identifies the specific device on that network. (Like a house number).</li>
+</ul>
+
+<h2>The Importance of Subnet Mask</h2>
+<p>
+The <strong>Subnet Mask</strong> is a 32-bit number that distinguishes the Network part from the Host part. It works by "masking" the network portion of the IP address.
+</p>
+<div class="highlight">
+For example, in the address <code>192.168.1.10</code> with a subnet mask of <code>255.255.255.0</code>:
+<br>• <strong>192.168.1</strong> is the Network.
+<br>• <strong>.10</strong> is the Host.
+</div>
+
+<h2>IP Addressing Classes</h2>
+<p>IPv4 addresses were originally divided into classes to define network sizes:</p>
+
+<table class="table table-dark table-striped" style="margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Range (1st Octet)</th>
+      <th>Default Subnet Mask</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Class A</strong></td>
+      <td>1 – 126</td>
+      <td>255.0.0.0 (/8)</td>
+      <td>Very large networks (ISPs, huge corps)</td>
+    </tr>
+    <tr>
+      <td><strong>Class B</strong></td>
+      <td>128 – 191</td>
+      <td>255.255.0.0 (/16)</td>
+      <td>Medium-sized networks (Universities)</td>
+    </tr>
+    <tr>
+      <td><strong>Class C</strong></td>
+      <td>192 – 223</td>
+      <td>255.255.255.0 (/24)</td>
+      <td>Small networks (Home, Small Business)</td>
+    </tr>
+    <tr>
+      <td><strong>Class D</strong></td>
+      <td>224 – 239</td>
+      <td>N/A</td>
+      <td>Multicast groups</td>
+    </tr>
+    <tr>
+      <td><strong>Class E</strong></td>
+      <td>240 – 255</td>
+      <td>N/A</td>
+      <td>Reserved for Research</td>
+    </tr>
+  </tbody>
+</table>
+<p><em>Note: 127.0.0.0/8 is reserved for loopback testing (localhost).</em></p>
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/basic.cli.lab.html" class="btn">Go to Basic CLI Navigation Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

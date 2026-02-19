@@ -1,0 +1,31 @@
+enable
+configure terminal
+hostname SW1
+!
+vlan 10
+ name Sales
+vlan 20
+ name Manager
+vlan 30
+ name Engineer
+vlan 40
+ name Support
+!
+interface fastEthernet 0/0
+ switchport mode access
+ switchport access vlan 10
+!
+interface fastEthernet 0/1
+ switchport mode access
+ switchport access vlan 20
+!
+interface fastEthernet 0/2
+ switchport mode access
+ switchport access vlan 30
+!
+interface fastEthernet 0/3
+ switchport mode access
+ switchport access vlan 40
+!
+end
+show vlan brief

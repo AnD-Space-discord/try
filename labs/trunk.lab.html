@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Lab 2: Trunking Configuration</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                              <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                      <header class="lab-header">
+    <h1>Lab 2: Trunking Configuration</h1>
+    <p>Configuring 802.1Q Trunks between Cisco Switches</p>
+  </header>
+
+  <main class="lab-main">
+    <h2>Objective</h2>
+    <p>Configure a trunk link between two switches to allow VLAN traffic to pass between them. Verify the trunk status and allowed VLANs.</p>
+
+    <h2>Lab Topology</h2>
+    <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f9f9f9; border: 2px dashed #ccc; border-radius: 8px;">
+      <img src="../Images/Trunk/trunk-topology.png" alt="Trunk Lab Topology" style="max-width: 100%; height: auto;">
+      <p><strong>Topology:</strong> SW1 (Gi0/1) connected to SW2 (Gi0/1)</p>
+    </div>
+
+    <h2>Task 1 – Create VLANs</h2>
+    <p>Create VLAN 10 and VLAN 20 on <strong>both</strong> switches.</p>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <pre>
+<span class="prompt">SW1(config)#</span> <span class="command">vlan 10</span>
+<span class="prompt">SW1(config-vlan)#</span> <span class="command">name Sales</span>
+<span class="prompt">SW1(config-vlan)#</span> <span class="command">vlan 20</span>
+<span class="prompt">SW1(config-vlan)#</span> <span class="command">name HR</span>
+<span class="prompt">! Repeat on SW2</span>
+</pre>
+    </div>
+
+    <h2>Task 2 – Configure Trunk on SW1</h2>
+    <p>Configure the interface connecting to SW2 as a trunk port.</p>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <pre>
+<span class="prompt">SW1(config)#</span> <span class="command">interface gigabitEthernet 0/1</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport trunk encapsulation dot1q</span> <span style="color:#777;">! If using L3 Switch</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport mode trunk</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">switchport trunk native vlan 99</span>
+<span class="prompt">SW1(config-if)#</span> <span class="command">no shutdown</span>
+</pre>
+    </div>
+
+    <h2>Task 3 – Configure Trunk on SW2</h2>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <pre>
+<span class="prompt">SW2(config)#</span> <span class="command">interface gigabitEthernet 0/1</span>
+<span class="prompt">SW2(config-if)#</span> <span class="command">switchport trunk encapsulation dot1q</span>
+<span class="prompt">SW2(config-if)#</span> <span class="command">switchport mode trunk</span>
+<span class="prompt">SW2(config-if)#</span> <span class="command">switchport trunk native vlan 99</span>
+<span class="prompt">SW2(config-if)#</span> <span class="command">no shutdown</span>
+</pre>
+    </div>
+
+    <h2>Task 4 – Verification</h2>
+    <p>Verify that the port is in trunking mode and check which VLANs are allowed.</p>
+    <div class="terminal">
+      <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <pre>
+<span class="prompt">SW1#</span> <span class="command">show interfaces trunk</span>
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      99
+
+Port        Vlans allowed on trunk
+Gi0/1       1-4094
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/1       1,10,20,99
+</pre>
+    </div>
+
+  
+                
+    
+    
+        <!-- Dynamic Script Downloads Section -->
+        <div id="script-downloads-container"></div>
+        <script src="../js/script-loader.js"></script>
+
+        <div class="d-flex justify-content-end mt-4 mb-3">
+            <a href="static-routing.lab.html" class="btn btn-primary btn-lg">
+                Next Lab: Static Routing Lab <i class="fas fa-chevron-right ms-2"></i>
+            </a>
+        </div>
+    </main>
+
+  
+  
+
+
+    
+    
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/download-broker.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

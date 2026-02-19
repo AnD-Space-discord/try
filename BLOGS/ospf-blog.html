@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>OSPF Basics | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>OSPF Basics</h1>
+  <p>Understanding Open Shortest Path First Protocol</p>
+  </header>
+
+<main>
+
+<p>
+<strong>OSPF (Open Shortest Path First)</strong> is a link-state routing protocol used to find the best path between the source and the destination router using its own Shortest Path First (SPF) algorithm (Dijkstra's algorithm). Unlike EIGRP, OSPF is an open standard protocol, meaning it is supported by almost all network vendors.
+</p>
+
+<h2>Key Features</h2>
+<ul>
+  <li><strong>Link-State Protocol:</strong> Routers exchange topology information to build a complete map of the network (LSDB).</li>
+  <li><strong>Hierarchical Design:</strong> Uses "Areas" to segment the network. Area 0 is the backbone area to which all other areas must connect.</li>
+  <li><strong>Metric:</strong> Uses "Cost" based on bandwidth (Cost = 10^8 / Bandwidth).</li>
+  <li><strong>Fast Convergence:</strong> Quickly adapts to network changes.</li>
+</ul>
+
+<h2>OSPF Tables</h2>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Table Name</th>
+      <th>Description</th>
+      <th>Command</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Neighbor Table</strong></td>
+      <td>Lists directly connected OSPF neighbors (Adjacencies).</td>
+      <td><code>show ip ospf neighbor</code></td>
+    </tr>
+    <tr>
+      <td><strong>Database Table (LSDB)</strong></td>
+      <td>Contains the map of the network topology.</td>
+      <td><code>show ip ospf database</code></td>
+    </tr>
+    <tr>
+      <td><strong>Routing Table</strong></td>
+      <td>Contains the best paths calculated by SPF.</td>
+      <td><code>show ip route ospf</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>OSPF Packet Types</h2>
+<ul>
+  <li><strong>Hello:</strong> Establishes and maintains neighbor relationships.</li>
+  <li><strong>DBD (Database Description):</strong> Summary of the LSDB.</li>
+  <li><strong>LSR (Link State Request):</strong> Request for specific link-state records.</li>
+  <li><strong>LSU (Link State Update):</strong> Sends the requested link-state records.</li>
+  <li><strong>LSAck:</strong> Acknowledges the receipt of LSUs.</li>
+</ul>
+
+<h2>OSPF Router Roles</h2>
+<ul>
+  <li><strong>Internal Router:</strong> A router with all interfaces in the same area.</li>
+  <li><strong>Backbone Router:</strong> A router with at least one interface in Area 0.</li>
+  <li><strong>ABR (Area Border Router):</strong> A router that connects one or more areas to the backbone (Area 0). It maintains a separate LSDB for each area it connects to.</li>
+  <li><strong>ASBR (Autonomous System Boundary Router):</strong> A router that connects the OSPF domain to another routing domain (like EIGRP or the Internet).</li>
+</ul>
+
+<h2>DR & BDR Election</h2>
+<p>On multi-access networks (like Ethernet), OSPF elects a <strong>Designated Router (DR)</strong> and a <strong>Backup Designated Router (BDR)</strong> to minimize traffic. Instead of every router exchanging updates with every other router, they only send updates to the DR/BDR.</p>
+<ul>
+  <li><strong>Multicast Addresses:</strong>
+    <ul>
+      <li><code>224.0.0.5</code>: All OSPF Routers listen to this.</li>
+      <li><code>224.0.0.6</code>: Only DR and BDR listen to this.</li>
+    </ul>
+  </li>
+  <li><strong>Election Criteria:</strong>
+    <ol>
+      <li>Highest Interface Priority (Default is 1).</li>
+      <li>Highest Router ID (if priorities are tied).</li>
+    </ol>
+  </li>
+</ul>
+
+<h2>Basic Configuration (Single Area)</h2>
+<div class="terminal">
+<div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+<pre>
+<span class="prompt">Router(config)#</span> <span class="command">router ospf 1</span> <span style="color:#777;">! 1 is the Process ID (locally significant)</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">network 192.168.10.0 0.0.0.255 area 0</span> <span style="color:#777;">! Uses Wildcard Mask</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">router-id 1.1.1.1</span> <span style="color:#777;">! Manually set Router ID</span>
+<span class="prompt">Router(config-router)#</span> <span class="command">passive-interface gigabitEthernet0/1</span> <span style="color:#777;">! Stop Hello packets on LAN</span>
+</pre>
+</div>
+
+
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/ospf.lab.html" class="btn">Go to OSPF Single Area Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>

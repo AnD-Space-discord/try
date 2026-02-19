@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4349583490319558">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4349583490319558"
+     crossorigin="anonymous"></script>
+  <title>Routing Protocols & IGPs | CCNA Blog</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+                            <nav>
+    <a href="../index.html">Home</a>
+    <div class="nav-item">
+      <a href="../labs.html">Labs <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../labs/switching.html">Switching</a>
+        <a href="../labs/routing.html">Routing</a>
+        <a href="../labs/security.html">Security</a>
+        <a href="../labs/ip-services.html">IP Services</a>
+        <a href="../labs.html">All Labs</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="../blog.html">Blog <i class="fas fa-chevron-down"></i></a>
+      <div class="dropdown-content">
+        <a href="../blog/switching.html">Switching</a>
+        <a href="../blog/routing.html">Routing</a>
+        <a href="../blog/security.html">Security</a>
+        <a href="../blog/ip-services.html">IP Services</a>
+        <a href="../blog.html">All Topics</a>
+      </div>
+    </div>
+    <a href="../contact.html">Contact</a>
+  </nav>
+
+                        <header class="hero">
+    <h1>Routing Protocols & IGPs</h1>
+  <p>Understanding Interior Gateway Protocols, Types, and AD Values</p>
+  </header>
+
+<main>
+
+<p>
+Routing protocols are the set of rules used by routers to communicate with each other and exchange information that enables them to select the best path to a destination. They are broadly classified into <strong>IGP (Interior Gateway Protocol)</strong> and <strong>EGP (Exterior Gateway Protocol)</strong>.
+</p>
+
+<h2>IGP vs. EGP</h2>
+<ul>
+  <li><strong>IGP:</strong> Used for routing <em>within</em> a single Autonomous System (AS). Examples: OSPF, EIGRP, RIP, IS-IS.</li>
+  <li><strong>EGP:</strong> Used for routing <em>between</em> different Autonomous Systems. Example: BGP (Border Gateway Protocol).</li>
+</ul>
+
+<h2>Types of IGPs</h2>
+<p>IGPs are categorized based on how they calculate routes:</p>
+
+<h3>1. Distance Vector</h3>
+<p>Routers send their entire routing table to neighbors periodically. They know "distance" (metric) and "vector" (direction/next-hop).</p>
+<ul>
+  <li><strong>RIP (Routing Information Protocol):</strong> Uses hop count. Slow convergence.</li>
+  <li><strong>EIGRP (Enhanced Interior Gateway Routing Protocol):</strong> Advanced distance vector (hybrid). Uses bandwidth and delay. Fast convergence.</li>
+</ul>
+
+<h3>2. Link State</h3>
+<p>Routers build a complete map of the network (topology) and calculate the best path using the SPF algorithm.</p>
+<ul>
+  <li><strong>OSPF (Open Shortest Path First):</strong> Industry standard. Uses Cost (Bandwidth) as metric.</li>
+  <li><strong>IS-IS (Intermediate System to Intermediate System):</strong> Used mostly in ISP networks.</li>
+</ul>
+
+<h2>Protocol Versions</h2>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Protocol</th>
+      <th>IPv4 Version</th>
+      <th>IPv6 Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RIP</td>
+      <td>RIPv1, RIPv2</td>
+      <td>RIPng</td>
+    </tr>
+    <tr>
+      <td>EIGRP</td>
+      <td>EIGRP</td>
+      <td>EIGRP for IPv6</td>
+    </tr>
+    <tr>
+      <td>OSPF</td>
+      <td>OSPFv2</td>
+      <td>OSPFv3</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Administrative Distance (AD) Comparison</h2>
+<p>Administrative Distance represents the <strong>trustworthiness</strong> of a route source. Lower values are preferred.</p>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Route Source</th>
+      <th>Default AD Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Connected Interface</td><td>0</td></tr>
+    <tr><td>Static Route</td><td>1</td></tr>
+    <tr><td>EIGRP Summary Route</td><td>5</td></tr>
+    <tr><td>eBGP</td><td>20</td></tr>
+    <tr><td>EIGRP (Internal)</td><td>90</td></tr>
+    <tr><td>OSPF</td><td>110</td></tr>
+    <tr><td>IS-IS</td><td>115</td></tr>
+    <tr><td>RIP</td><td>120</td></tr>
+    <tr><td>EIGRP (External)</td><td>170</td></tr>
+    <tr><td>iBGP</td><td>200</td></tr>
+  </tbody>
+</table>
+
+</main>
+<div style="text-align: center; margin-bottom: 40px;">
+    <a href="../labs/rip.lab.html" class="btn">Go to RIPv2 Routing Lab →</a>
+</div>
+
+
+                        <footer>
+    <p>© 2026 Architecture & Developer Space</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/theme-manager.js"></script>
+</body>
+</html>
